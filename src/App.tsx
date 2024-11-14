@@ -3,8 +3,20 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+interface ITest {
+    b: string;
+    c: unknown;
+    d?: number
+}
+
+const fn = (): string => { }
 function App() {
     const [count, setCount] = useState(0)
+    const b: string = 25;
+    const a: ITest = {
+        b: "",
+    }
+    console.log(a)
 
     return (
         <>
