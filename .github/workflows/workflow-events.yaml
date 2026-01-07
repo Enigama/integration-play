@@ -1,7 +1,6 @@
 name: Workflow Events
 
-on:
-  push
+on: [push, pull_request, schedule, workflow_dispatch]
 
 jobs:
   echo:
