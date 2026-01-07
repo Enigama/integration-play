@@ -5,6 +5,9 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -15,6 +18,9 @@ jobs:
 
       - name: Install Dependecies
         run: npm ci
+
+      - name: Run tests
+        run: npm run test
 
     # 0. Checkout code
     # 1. Install deps of  react app
