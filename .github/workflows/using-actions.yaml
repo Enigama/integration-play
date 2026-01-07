@@ -1,18 +1,21 @@
 name: Using actions
 
-on: 
-    push
+on: push
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Code
-              uses: actions/checkout@v4
-            - name: Pringitng Folders
-              run: ls
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "24.x"
 
-        # 0. Checkout code
-        # 1. Install deps of  react app
-        # 2. Execute autmated tests
+      - name: Install Dependecies
+        run: npm ci
 
+    # 0. Checkout code
+    # 1. Install deps of  react app
+    # 2. Execute autmated tests
