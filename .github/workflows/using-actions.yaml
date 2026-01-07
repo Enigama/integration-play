@@ -6,12 +6,13 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-
         steps:
-        - name: Setup Node
-          uses: actions/setup-node@v4
-          with: 
-                node-version: '24.x'
+            - name: Checkout Code
+              uses: actions/chckout@v4
+            - name: Pringitng Folders
+              run: ls
 
-        - name: Using the Checkout Action
-          uses: actions/checkout@v4
+        # 0. Checkout code
+        # 1. Install deps of  react app
+        # 2. Execute autmated tests
+
