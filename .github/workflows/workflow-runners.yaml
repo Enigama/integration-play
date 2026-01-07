@@ -10,7 +10,6 @@ jobs:
             - name: Show OS
               run: | 
                 echo "This job is running on an Ubuntu runner"
-                |
                 echo $RUNNER_OS
 
     windows-echo:
@@ -20,7 +19,6 @@ jobs:
               shell: bash
               run: |
                    echo "This job is running on a Windows runner"
-                   |
                    echo $RUNNER_OS
 
     mac-echo:
@@ -29,6 +27,5 @@ jobs:
             - name: Show OS
               run: |
                    echo "This job is running on a MacOS runner"
-                   |
                    echo $RUNNER_OS
 
