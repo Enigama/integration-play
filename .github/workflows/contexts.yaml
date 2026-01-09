@@ -45,5 +45,5 @@ jobs:
     steps:
       - name: Print variables
         run: |
-          echo $env.MY_WORKFLOW_VAR
-          echo $env.MY_OVERWRITTEN_VAR
+          echo "Workflow env $env.MY_WORKFLOW_VAR"
+          echo "Overwritten var $env.MY_OVERWRITTEN_VAR"
