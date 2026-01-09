@@ -20,4 +20,4 @@ jobs:
           echo "Repository: ${{ github.repository }}"
 
       - name: Retrieve Variable
-        run: echo ${{ secrets.MY_VAR }}
+        run: echo ${{ env.MY_VAR }}
