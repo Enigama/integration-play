@@ -27,4 +27,4 @@ jobs:
 
       - name: "Greeting"
         run: |
-          echo "Hello, world"
+          echo "Hello, world: ${{ github.ref_name}} | ${{ inputs.debug }}"
