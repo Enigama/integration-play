@@ -1,4 +1,5 @@
 name: Using Expressions
+run-name: Using Expressions | DEBUG - ${{ inputs.debug && 'ON' || 'OFF' }}
 
 on:
   push:
@@ -20,8 +21,8 @@ jobs:
           echo "Commit SHA ${{ github.sha }}"
           echo "Runner OS: ${{ runner.os }}"
 
-      - name: "[debug] Pring when triggerd from current branch ex: 'expressions'"
-        if: inputs.debug == true && github.ref_name == 'expressions'
+      - name: "[debug] Pring when triggerd from current branch ex: 'main'"
+        if: inputs.debug == true && github.ref_name == 'main'
         run: |
           echo "I was triggered from the branch: ${{ github.ref_name }}"
 
