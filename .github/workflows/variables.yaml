@@ -22,7 +22,7 @@ jobs:
 
         run: |
           echo "Step env var: ${{ env.STEP_VAR }}"
-          echo "Step env var 2: ${{ env.step_var2 }}"
+          echo "Step env var 2: $step_var2" # This in trace log will be show as variable rathen then others env vars which be value
           echo "Job env var: ${{ env.JOB_VAR }}"
           echo "Workflow env var: ${{ env.WORKFLOW_VAR }}"
           echo "Overwritten: ${{ env.OVERWRITTEN }}"
