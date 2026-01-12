@@ -2,7 +2,7 @@ name: Using Expressions
 run-name: Using Expressions | DEBUG - ${{ inputs.debug && 'ON' || 'OFF' }}
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Works only on default branch
     inputs:
       debug:
         type: boolean
