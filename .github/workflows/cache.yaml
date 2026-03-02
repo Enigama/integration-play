@@ -15,7 +15,36 @@ on:
         description: Node version to use for caching
 
 jobs:
-  build:
+  install-deps:
+    runs-on: ubuntu-latest
+    outputs:
+      deps-cache-key: ${{ steps.cache-key.outputs.CACHE_KEY }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+      - name: Calculate cache key
+        id: cache-key
+        run: |
+          echo "CACHE_KEY=deps-node-modules-${{ hashFiles('package-lock.json') }}" >> $GITHUB_OUTPUT
+
+      - name: Download cached dependencies
+        id: cache
+        if: ${{ steps.cache-key.outputs.CACHE_KEY }}
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ steps.cache-key.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+  lint-test:
+    needs: install-deps
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -31,11 +60,31 @@ jobs:
         uses: actions/cache@v3
         with:
           path: node_modules
-          key: deps-node-modules-${{ hashFiles('package-lock.json') }}
+          key: ${{ needs.install-deps.outputs.deps-cache-key }}
 
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+      - name: Testing
+        run: npm test
+      - name: Linting
+        run: npm run lint
+
+  build:
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Download cached dependencies
+        id: cache
+        if: ${{ inputs.use-cache }}
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ needs.install-deps.outputs.deps-cache-key }}
 
       - name: Testing
         run: npm test
