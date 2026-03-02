@@ -8,6 +8,12 @@ on:
         default: true
         description: Whether to execute cache step
 
+      node-version:
+        type: choice
+        options: [18.x, 20.x, 24.x]
+        default: 24.x
+        description: Node version to use for caching
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,7 +23,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "24"
+          node-version: ${{ inputs.node-version }}
       - name: install dependencies
         run: npm ci
       - name: Testing
