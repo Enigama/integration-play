@@ -1,20 +1,32 @@
 name: Working with Environments
-run-name: ${{ github.event.inputs.target-env }}
 
-on:
-  workflow_dispatch:
-    inputs:
-      target-env:
-        type: environment
-        default: staging
+on: workflow_dispatch
 
 jobs:
-  echo:
+  deploy-staging:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.target-env }}
+    environment: staging
+    env:
+      my-env-value: ${{ vars.MY_ENV_VALUE || 'default value' }}
+    steps:
+      - name: Deploy to staging
+        run: |
+          echo "Env variable: ${{ env.my-env-value }}"
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    steps:
+      - name: E2E tests
+        run: echo "Running E2E"
+
+  deploy-prod:
+    runs-on: ubuntu-latest
+    needs: e2e-tests
+    environment: production
     env:
       my-env-value: ${{ vars.MY_ENV_VALUE || 'default value' }}
     steps:
       - name: Echo vars
         run: |
-          echo "Env variable: ${{ env.my-env-value }}"
+          echo "Deploying to prod ${{ env.my-env-value }}"
