@@ -48,6 +48,12 @@ jobs:
             opacity: 75
           - shape: circle
             opacity: 100
+          - color: green
+            shape: circle
+            size: medium
+        exclude: # Exclude works only with matrix so noting from include can't be excluded
+          - color: green
+            shape: circle
 
     steps:
       - name: Dummy step
